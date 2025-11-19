@@ -1,0 +1,29 @@
+### DOCKER IMAGE ###
+1. docker build -t presentation:1.0.0 .
+2. docker tag presentation:1.0.0 uyahya/presentation:1.0.0
+3. docker push uyahya/presentation:1.0.0
+docker run -d -p 8080:8080 --name presentation:1.0.0
+
+kubectl port-forward svc/podinfo 8080:80 
+
+# Send traffic to the Pod
+while ($true) {
+    kubectl get canaries
+    curl http://localhost:8080/good
+    Start-Sleep -Seconds 5
+}
+
+
+helm upgrade -i flagger flagger/flagger --namespace flagger-system --create-namespace --set meshProvider=linkerd --set metricsServer=http://prometheus.linkerd-viz.svc.cluster.local:9090 --set clusterName=docker-desktop --set loadtester.enabled=true --set linkerd.enabled=false
+helm upgrade -i flagger flagger/flagger --namespace flagger-system --create-namespace --set meshProvider=linkerd --set metricsServer=http://10.1.0.131:9090 --set clusterName=docker-desktop --set loadtester.enabled=true --set linkerd.enabled=false
+
+
+kubectl annotate namespace flagger-system linkerd.io/inject- --overwrite
+kubectl annotate namespace flagger-system linkerd.io/inject- --overwrite
+kubectl rollout restart deploy flagger -n flagger-system
+
+kubectl logs -n flagger-system deploy/flagger
+
+flagger-f54ffd486
+
+curl http://podinfo.api.svc.cluster.local:80/good
