@@ -23,9 +23,3 @@ helm upgrade -i flagger flagger/flagger \
 --set prometheus.install=true \
 --set meshProvider=nginx
 
-# Send traffic to the Pod
-while ($true) {
-    kubectl get canaries
-    curl http://localhost:8080/good
-    Start-Sleep -Seconds 5
-}
